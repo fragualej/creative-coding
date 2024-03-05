@@ -6,7 +6,25 @@
         <Timer id="timer" />
         <Rectangle
             id="rectangle"
-            color="#eeeeee"
+            color="#000000"
         />
+        <LayoutGroup
+            id="layoutGroup"
+            translation="[100,540]">
+            <SimpleLabel
+                id="ampLabel"
+                font="fontUri:MediumBoldSystemFont"
+                fontSize="30"
+                horizOrigin="left"
+                vertOrigin="center"
+            />
+            <SimpleLabel
+                id="freqLabel"
+                font="fontUri:MediumBoldSystemFont"
+                fontSize="30"
+                horizOrigin="left"
+                vertOrigin="center"
+            />
+        </LayoutGroup>
     </children>
 </component>

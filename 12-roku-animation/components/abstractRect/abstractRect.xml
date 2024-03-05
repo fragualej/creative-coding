@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component name="abstractRect" extends="group">
+    <script type="text/brightscript" uri="abstractRect.brs" />
+    <script type="text/brightscript" uri="pkg:/source/utils.brs" />
+    <interface>
+        <field id="width" type="float" alias="rectangle.width" />
+        <field id="height" type="float" alias="rectangle.height" />
+        <field id="rotation" type="float" alias="rectangle.rotation" />
+        <field id="color" type="color" alias="rectangle.color" />
+        <field id="translation" type="array" onChange="onTranslationSet" />
+    </interface>
+    <children>
+        <Rectangle
+            id="rectangle"
+        />
+    </children>
+</component>
