@@ -13,14 +13,14 @@
             translation="[100,540]">
             <SimpleLabel
                 id="ampLabel"
-                font="fontUri:MediumBoldSystemFont"
+                fontUri="MediumBoldSystemFont"
                 fontSize="30"
                 horizOrigin="left"
                 vertOrigin="center"
             />
             <SimpleLabel
                 id="freqLabel"
-                font="fontUri:MediumBoldSystemFont"
+                fontUri="MediumBoldSystemFont"
                 fontSize="30"
                 horizOrigin="left"
                 vertOrigin="center"

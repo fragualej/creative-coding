@@ -25,32 +25,32 @@ end sub
 
 
 sub setGrid()
-    r = getResolution()
-
     numCells = m.cols * m.rows
 
     gridw = m.width * 0.8
     gridh = m.height * 0.8
 
+    cx = (getResolution().width - m.width) * 0.5
+    cy = (getResolution().height - m.height) * 0.5
+
+    ix = (m.width - gridw) * 0.5
+    iy = (m.height - gridh) * 0.5
+
     m.cellw = gridw / m.cols
     m.cellh = gridh / m.rows
 
-    ix = (r.width - m.width) * 0.5
-    iy = (r.height - m.height) * 0.5
 
-    cx = (m.width - gridw) * 0.5
-    cy = (m.height - gridh) * 0.5
 
     m.rectangle.width = m.width
     m.rectangle.height = m.height
-    m.rectangle.translation = [ix, iy]
+    m.rectangle.translation = [cx, cy]
 
     for i = 0 to numCells - 1
         col = i mod m.cols
         row = fix(i / m.rows)
 
-        x = cx + (col * m.cellw)
-        y = cy + (row * m.cellh)
+        x = ix + (col * m.cellw)
+        y = iy + (row * m.cellh)
 
         w = m.cellw * 0.85
         h = m.cellh * 0.15
