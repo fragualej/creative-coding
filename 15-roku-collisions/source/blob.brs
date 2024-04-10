@@ -24,56 +24,50 @@ function _blob(x, y, size)
             if m.pos.x - m.radius <= ix or m.pos.x >= ix + width - m.radius then m.vel.x *= -1
             if m.pos.y - m.radius <= iy or m.pos.y >= iy + height - m.radius then m.vel.y *= -1
         end sub
-        ' collision: sub(other as object)
-        '     ' Calculate the distance between the two blobs
-        '     d = dist(other.pos.x, other.pos.y, m.pos.x, m.pos.y)
-
-        '     ' Check if the distance is less than the sum of the radii
-        '     if d < m.radius + other.radius then
-        '         ' The blobs are colliding, swap their velocities
-        '         temp = m.vel
-        '         m.vel = other.vel
-        '         other.vel = temp
-        '     end if
-        ' end sub
-
         collision: sub(other as object)
             ' Calculate the distance between the two blobs
             d = dist(other.pos.x, other.pos.y, m.pos.x, m.pos.y)
 
-            ' ' Check if the distance is less than the sum of the radius
+            ' Check if the distance is less than the sum of the radius
             if d < m.radius + other.radius then
                 ' The blobs are colliding, calculate the collision response
-                PI = Math_PI()
+                pi = math_pi()
+                m1 = m.mass
+                m2 = other.mass
+
                 dx = m.pos.x - other.pos.x
                 dy = m.pos.y - other.pos.y
-                collisionAngle = Math_atan2(dy, dx)
+                phi = math_atan2(dy, dx)
 
-                magnitude1 = sqr(m.vel.x ^ 2 + m.vel.y ^ 2)
-                magnitude2 = sqr(other.vel.x ^ 2 + other.vel.y ^ 2)
+                v1i = sqr(m.vel.x ^ 2 + m.vel.y ^ 2)
+                v2i = sqr(other.vel.x ^ 2 + other.vel.y ^ 2)
 
-                direction1 = Math_atan2(m.vel.y, m.vel.x)
-                direction2 = Math_atan2(other.vel.y, other.vel.x)
+                angle1 = math_atan2(m.vel.y, m.vel.x)
+                angle2 = math_atan2(other.vel.y, other.vel.x)
 
+                v1xr = v1i * cos(angle1 - phi)
+                v1yr = v2i * sin(angle2 - phi)
 
-                new_xspeed1 = magnitude1 * cos(direction1 - collisionAngle)
-                new_yspeed1 = magnitude2 * sin(direction2 - collisionAngle)
-                new_xspeed2 = magnitude2 * cos(direction2 - collisionAngle)
-                new_yspeed2 = magnitude1 * sin(direction1 - collisionAngle)
+                v2xr = v2i * cos(angle2 - phi)
+                v2yr = v1i * sin(angle1 - phi)
 
-                final_xspeed1 = cos(collisionAngle) * new_xspeed1 + cos(collisionAngle + PI / 2) * new_yspeed1
-                final_yspeed1 = sin(collisionAngle) * new_xspeed1 + sin(collisionAngle + PI / 2) * new_yspeed1
-                final_xspeed2 = cos(collisionAngle) * new_xspeed2 + cos(collisionAngle + PI / 2) * new_yspeed2
-                final_yspeed2 = sin(collisionAngle) * new_xspeed2 + sin(collisionAngle + PI / 2) * new_yspeed2
+                v1fxr = ((m1 - m2) * v1xr + (m2 + m2) * v2xr) / (m1 + m2)
+                v2fxr = ((m1 + m1) * v1xr + (m2 - m1) * v2xr) / (m1 + m2)
 
-                m.vel.x = final_xspeed1
-                m.vel.y = final_yspeed1
-                other.vel.x = final_xspeed2
-                other.vel.y = final_yspeed2
+                v1fyr = v1yr
+                v2fyr = v2yr
 
-                print dx, dy, collisionAngle, direction1, direction2, formatJson(m.vel), formatJson(other.vel)
+                v1fx = cos(phi) * v1fxr + cos(phi + pi / 2) * v1fyr
+                v1fy = sin(phi) * v1fxr + sin(phi + pi / 2) * v1fyr
+                v2fx = cos(phi) * v2fxr + cos(phi + pi / 2) * v2fyr
+                v2fy = sin(phi) * v2fxr + sin(phi + pi / 2) * v2fyr
+
+                m.vel.x = v1fx
+                m.vel.y = v1fy
+
+                other.vel.x = v2fx
+                other.vel.y = v2fy
             end if
-            print "------------------------"
         end sub
     }
     return m

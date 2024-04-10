@@ -1,9 +1,9 @@
-function Math_PI()
+function math_PI()
     return 3.14159265358979323846
 end function
 
-function Math_atan2(y as float, x as float) as float
-    PI = Math_PI()
+function math_atan2(y as float, x as float) as float
+    PI = math_PI()
     if x > 0 then
         return atn(y / x)
     else if x < 0 then

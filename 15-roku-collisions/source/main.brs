@@ -34,7 +34,7 @@ sub main()
     gridw = width * 0.95
     gridh = height * 0.95
     threshold = 1.000
-    numBlobs = 5
+    numBlobs = 10
     gridSize = 24
 
     n = 24
@@ -47,29 +47,22 @@ sub main()
     cellh = gridh / n
 
     blobs = []
-    blobs.push(_blob(ix + gridw * 0.25, iy + gridh * 0.45, cellh * 3))
-    blobs.push(_blob(ix + gridw * 0.75, iy + gridh * 0.50, cellh * 2))
-
-    blobs[0].vel.x = 5
-    blobs[0].vel.y = 0
-
-    blobs[1].vel.x = 0
-    blobs[1].vel.y = 0
-    ' for i = 0 to numBlobs - 1
-    '     while true
-    '         x = ix + gridw * randomRange(0.1, 0.9)
-    '         y = iy + gridh * randomRange(0.1, 0.9)
-    '         if not checkPosition(x, y, cellh, blobs) then exit while
-    '     end while
-    '     blobs.push(_blob(x, y, cellh))
-    ' end for
+    for i = 0 to numBlobs - 1
+        while true
+            x = ix + gridw * randomRange(0.1, 0.9)
+            y = iy + gridh * randomRange(0.1, 0.9)
+            size = randomRange(cellh, cellh * 1.5)
+            if not checkPosition(x, y, size, blobs) then exit while
+        end while
+        blobs.push(_blob(x, y, size))
+    end for
 
     while true
         msg = wait(1, port)
         msgType = type(msg)
         ms = timer.totalMilliseconds()
         if msgType = "roUniversalControlEvent"
-            tweakpane.update(msg)
+            ' tweakpane.update(msg)
         end if
 
         if ms mod 30 = 0 ' 30 frames/sec
