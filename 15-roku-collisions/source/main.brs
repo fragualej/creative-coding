@@ -10,31 +10,12 @@ sub main()
     m.screen.setMessagePort(port)
     m.screen.setAlphaEnable(true)
 
-    white = &hFFFFFFFF
-    black = &h000000FF
-    red = &hFF0000FF
-    green = &h00FF00FF
-    blue = &h0000FFFF
-    gray = &h969696FF
-    purple = &h8A2BE2FF
-    orange = &hFFA500FF
-    yellow = &hFFFF00FF
-
-    params = {
-        "ftr": 100000
-        "num": 1.024
-        "dim": 4.0034
-        "scale": 100
-    }
-
-    tweakpane = _tweakpane(params, m.screen)
-
     width = 1080
     height = 1080
     gridw = width * 0.95
     gridh = height * 0.95
     threshold = 1.000
-    numBlobs = 10
+    numBlobs = 4
     gridSize = 24
 
     n = 24
@@ -51,7 +32,7 @@ sub main()
         while true
             x = ix + gridw * randomRange(0.1, 0.9)
             y = iy + gridh * randomRange(0.1, 0.9)
-            size = randomRange(cellh, cellh * 1.5)
+            size = randomRange(cellh * 1, cellh * 5)
             if not checkPosition(x, y, size, blobs) then exit while
         end while
         blobs.push(_blob(x, y, size))
@@ -61,13 +42,9 @@ sub main()
         msg = wait(1, port)
         msgType = type(msg)
         ms = timer.totalMilliseconds()
-        if msgType = "roUniversalControlEvent"
-            ' tweakpane.update(msg)
-        end if
 
         if ms mod 30 = 0 ' 30 frames/sec
-            m.screen.clear(black)
-            tweakpane.draw()
+            m.screen.clear(colorUtils_getByName("black"))
             for each blob in blobs
                 blob.draw()
                 blob.update()
@@ -114,7 +91,7 @@ end function
 
 
 sub line(x0, y0, x1, y1)
-    m.screen.drawLine(x0, y0, x1, y1, &hFFFFFFFF)
+    m.screen.drawLine(x0, y0, x1, y1, colorUtils_getByName("white"))
 end sub
 
 
