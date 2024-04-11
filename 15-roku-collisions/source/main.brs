@@ -15,7 +15,7 @@ sub main()
     gridw = width * 0.95
     gridh = height * 0.95
     threshold = 1.000
-    numBlobs = 4
+    numBlobs = 2
     gridSize = 24
 
     n = 24
